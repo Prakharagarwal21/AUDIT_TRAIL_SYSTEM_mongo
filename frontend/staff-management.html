@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audit Trail DBMS - Staff Management</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script defer src="/script.js"></script>
+  </head>
+  <body>
+    <div class="topnav">
+      <div class="topnav-inner">
+        <div class="brand">Audit Trail DBMS</div>
+        <div class="tabs" id="navTabs">
+          <a class="tab" href="/dashboard">👥 Employees</a>
+          <a class="tab" href="/profile">👤 Profile</a>
+          <a class="tab active" href="/staff-management" data-admin-only="1">🔐 Staff Management</a>
+          <a class="tab" href="/bonus-management" data-admin-only="1">💰 Bonus Management</a>
+          <a class="tab" href="/audit-logs" data-admin-only="1">🧾 Audit Logs</a>
+        </div>
+        <div class="userbox">
+          <div class="avatar" id="navAvatar"><span style="font-weight:900;color:#1d4ed8;">A</span></div>
+          <div class="user-meta">
+            <div class="name" id="navName">Loading…</div>
+            <div class="role" id="navRole">—</div>
+          </div>
+          <button class="btn" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>Staff Management</h1>
+      <h2>Create staff users, block/unblock, and reset passwords</h2>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="row">
+          <div>
+            <label>New Username</label>
+            <input id="newUserUsername" placeholder="e.g. nishika" />
+          </div>
+          <div>
+            <label>Temp Password</label>
+            <input id="newUserPassword" type="password" placeholder="min 8 chars" />
+          </div>
+          <div class="tight" style="min-width:220px;">
+            <label>Role</label>
+            <select id="newUserRole">
+              <option value="staff">staff</option>
+              <option value="admin">admin</option>
+            </select>
+          </div>
+          <div class="tight" style="min-width:180px;">
+            <label>&nbsp;</label>
+            <button class="btn primary" id="createUserBtn" type="button">Create User</button>
+          </div>
+        </div>
+        <div id="staffMsg" class="msg" style="display:none;"></div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="row" style="justify-content:space-between;">
+          <div style="font-weight:800;">Users</div>
+          <button class="btn" id="refreshUsersBtn" type="button">Refresh</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Last Login</th>
+              <th>Status</th>
+              <th>Blocked Reason</th>
+              <th>Blocked At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

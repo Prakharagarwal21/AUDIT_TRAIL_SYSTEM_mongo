@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audit Trail DBMS - Employees</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script defer src="/script.js"></script>
+  </head>
+  <body>
+    <div class="topnav">
+      <div class="topnav-inner">
+        <div class="brand">Audit Trail DBMS</div>
+        <div class="tabs" id="navTabs">
+          <a class="tab active" href="/dashboard">👥 Employees</a>
+          <a class="tab" href="/profile">👤 Profile</a>
+          <a class="tab" href="/staff-management" data-admin-only="1">🔐 Staff Management</a>
+          <a class="tab" href="/bonus-management" data-admin-only="1">💰 Bonus Management</a>
+          <a class="tab" href="/audit-logs" data-admin-only="1">🧾 Audit Logs</a>
+        </div>
+        <div class="userbox">
+          <div class="avatar" id="navAvatar"><span style="font-weight:900;color:#1d4ed8;">A</span></div>
+          <div class="user-meta">
+            <div class="name" id="navName">Loading…</div>
+            <div class="role" id="navRole">—</div>
+          </div>
+          <button class="btn" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>Employee Management</h1>
+      <h2>Manage employee records and view audit trails</h2>
+
+      <div class="card" id="securityCard" style="margin-top:14px; display:none;">
+        <div class="row" style="justify-content:space-between;">
+          <div class="tight" style="min-width:auto;">
+            <div style="font-weight:800;">🔒 Security Monitoring Dashboard</div>
+            <div style="color:var(--muted);font-size:12px;margin-top:2px;">Auto-block triggers on excessive deletions</div>
+          </div>
+          <div class="row tight" style="min-width:auto;gap:16px;">
+            <div class="pill">Blocked: <b id="secBlockedCount">0</b></div>
+            <div class="pill">Unread: <b id="secUnreadCount">0</b></div>
+            <div class="pill">Alerts (7d): <b id="secTotalCount">0</b></div>
+          </div>
+        </div>
+
+        <div class="tabs" style="margin-top:10px;">
+          <button class="tab active" id="secTabAlerts" type="button">Security Alerts</button>
+          <button class="tab" id="secTabBlocked" type="button">Blocked Accounts</button>
+          <button class="btn tight secondary" id="secRefreshBtn" type="button" style="margin-left:auto;">Refresh</button>
+        </div>
+
+        <div id="secMsg" class="msg" style="display:none;"></div>
+
+        <div id="secAlertsPane" style="margin-top:10px;">
+          <div id="alertsList"></div>
+        </div>
+        <div id="secBlockedPane" style="margin-top:10px; display:none;">
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Reason</th>
+                <th>Blocked At</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="blockedTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="row">
+          <div>
+            <input id="empSearch" placeholder="Search by name, email, or position…" />
+          </div>
+          <div class="tight">
+            <button class="btn primary" id="empNewBtn" type="button">+ Add Employee</button>
+          </div>
+        </div>
+
+        <div id="empMsg" class="msg" style="display:none;"></div>
+
+        <table aria-label="Employees table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Position</th>
+              <th>Department</th>
+              <th>Salary</th>
+              <th>Total Bonuses</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="empTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

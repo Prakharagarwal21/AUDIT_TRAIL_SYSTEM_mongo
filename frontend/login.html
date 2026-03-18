@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audit Trail DBMS - Sign in</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script defer src="/script.js"></script>
+  </head>
+  <body>
+    <div class="login-bg">
+      <div class="login-shell">
+        <div class="login-left">
+          <div class="title">Secured Audit Trail System</div>
+          <div class="subtitle">
+            Securely track changes, keep records, and audit actions across your organization. Fast, transparent, and reliable.
+          </div>
+          <ul>
+            <li>Role-based access</li>
+            <li>Immutable audit records</li>
+            <li>Security monitoring & alerts</li>
+            <li>Employee + bonus management</li>
+          </ul>
+        </div>
+
+        <div class="login-card">
+          <div class="row" style="justify-content: space-between;">
+            <div>
+              <h1 style="font-size:22px;margin:0;">Welcome back</h1>
+              <div style="color:var(--muted);font-size:13px;margin-top:2px;">Sign in to continue to the dashboard</div>
+            </div>
+            <div class="avatar" title="Profile"><span style="font-weight:900;color:#1d4ed8;">A</span></div>
+          </div>
+
+          <form id="loginForm" style="margin-top: 14px;">
+            <div>
+              <label for="username">Username</label>
+              <input id="username" name="username" placeholder="your username" autocomplete="username" required />
+            </div>
+            <div style="margin-top: 12px;">
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+              <div class="tight" style="display:flex;align-items:center;gap:8px;min-width:auto;">
+                <input id="rememberMe" type="checkbox" style="width:auto;" />
+                <label for="rememberMe" style="margin:0;">Remember me</label>
+              </div>
+              <div class="tight" style="text-align:right;">
+                <button type="button" class="btn link" id="forgotBtn">Forgot?</button>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 12px;">
+              <button class="btn primary" type="submit">Sign in</button>
+            </div>
+
+            <div style="margin-top: 10px; text-align:center; color:var(--muted); font-size:12px;">Or continue with</div>
+            <div class="row" style="margin-top: 10px;">
+              <button class="btn" type="button" disabled>Google</button>
+              <button class="btn" type="button" disabled>GitHub</button>
+            </div>
+
+            <div id="loginMsg" class="msg" style="display:none;"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

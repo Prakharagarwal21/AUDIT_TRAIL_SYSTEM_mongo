@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audit Trail DBMS - Bonus Management</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script defer src="/script.js"></script>
+  </head>
+  <body>
+    <div class="topnav">
+      <div class="topnav-inner">
+        <div class="brand">Audit Trail DBMS</div>
+        <div class="tabs" id="navTabs">
+          <a class="tab" href="/dashboard">👥 Employees</a>
+          <a class="tab" href="/profile">👤 Profile</a>
+          <a class="tab" href="/staff-management" data-admin-only="1">🔐 Staff Management</a>
+          <a class="tab active" href="/bonus-management" data-admin-only="1">💰 Bonus Management</a>
+          <a class="tab" href="/audit-logs" data-admin-only="1">🧾 Audit Logs</a>
+        </div>
+        <div class="userbox">
+          <div class="avatar" id="navAvatar"><span style="font-weight:900;color:#1d4ed8;">A</span></div>
+          <div class="user-meta">
+            <div class="name" id="navName">Loading…</div>
+            <div class="role" id="navRole">—</div>
+          </div>
+          <button class="btn" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>Bonus Management</h1>
+      <h2>Add and remove employee bonuses</h2>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="row">
+          <div>
+            <label>Employee</label>
+            <select id="bonusEmployeeSelect"></select>
+          </div>
+          <div>
+            <label>Amount</label>
+            <input id="bonusAmount" type="number" min="0" step="0.01" placeholder="5000" />
+          </div>
+          <div>
+            <label>Note</label>
+            <input id="bonusNote" placeholder="Performance bonus" />
+          </div>
+          <div class="tight" style="min-width:180px;">
+            <label>&nbsp;</label>
+            <button class="btn primary" id="addBonusBtn" type="button">Add Bonus</button>
+          </div>
+        </div>
+        <div id="bonusMsg" class="msg" style="display:none;"></div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="row" style="justify-content:space-between;">
+          <div style="font-weight:800;">Bonuses</div>
+          <button class="btn" id="refreshBonusesBtn" type="button">Refresh</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Amount</th>
+              <th>Note</th>
+              <th>Created By</th>
+              <th>Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="bonusesTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
