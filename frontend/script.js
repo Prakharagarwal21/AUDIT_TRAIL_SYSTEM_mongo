@@ -261,7 +261,7 @@
       for (const emp of list) {
         const tr = document.createElement("tr");
         const canEdit = user?.role === "admin" || user?.role === "staff";
-        const canDelete = user?.role === "admin";
+        const canDelete = user?.role === "admin" || user?.role === "staff";
         const actionsHtml = [
           canEdit ? `<button class="btn tight" data-action="edit" data-id="${emp._id}">Edit</button>` : "",
           canDelete ? `<button class="btn tight danger" data-action="delete" data-id="${emp._id}">Delete</button>` : ""
