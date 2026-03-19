@@ -260,11 +260,14 @@
       tbody.innerHTML = "";
       for (const emp of list) {
         const tr = document.createElement("tr");
-        const actionsHtml =
-          user?.role === "admin"
-            ? `<button class="btn tight" data-action="edit" data-id="${emp._id}">Edit</button>
-               <button class="btn tight danger" data-action="delete" data-id="${emp._id}">Delete</button>`
-            : `<span class="pill">Read-only</span>`;
+        const canEdit = user?.role === "admin" || user?.role === "staff";
+        const canDelete = user?.role === "admin";
+        const actionsHtml = [
+          canEdit ? `<button class="btn tight" data-action="edit" data-id="${emp._id}">Edit</button>` : "",
+          canDelete ? `<button class="btn tight danger" data-action="delete" data-id="${emp._id}">Delete</button>` : ""
+        ]
+          .filter(Boolean)
+          .join(" ");
 
         tr.innerHTML = `
           <td>${escapeHtml(emp.name)}</td>
@@ -298,7 +301,6 @@
     }
 
     if (newBtn) {
-      if (user?.role !== "admin") newBtn.style.display = "none";
       newBtn.addEventListener("click", () => {
         openModal({
           title: "Add Employee",
