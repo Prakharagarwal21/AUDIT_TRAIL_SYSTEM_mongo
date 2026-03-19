@@ -1,0 +1,11 @@
+{
+  "name": "audit-trail-dbms",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend"
+  ],
+  "engines": {
+    "node": "20.x"
+  }
+}

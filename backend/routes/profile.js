@@ -16,7 +16,7 @@ const passwordSchema = z.object({
 });
 
 function uploadsDir() {
-  const dir = path.join(process.cwd(), "uploads");
+  const dir = process.env.VERCEL ? path.join("/tmp", "uploads") : path.join(process.cwd(), "uploads");
   fs.mkdirSync(dir, { recursive: true });
   return dir;
 }
@@ -93,7 +93,7 @@ export function profileRoutes() {
     const user = await User.findById(req.auth.user._id).lean();
     const previousUrl = user.profilePhotoUrl;
     if (previousUrl?.startsWith("/uploads/")) {
-      safeUnlink(path.join(process.cwd(), previousUrl));
+      safeUnlink(path.join(uploadsDir(), path.basename(previousUrl)));
     }
 
     const url = `/uploads/${path.basename(file.path)}`;
@@ -119,7 +119,7 @@ export function profileRoutes() {
     const user = await User.findById(req.auth.user._id).lean();
     const previousUrl = user.profilePhotoUrl;
     if (previousUrl?.startsWith("/uploads/")) {
-      safeUnlink(path.join(process.cwd(), previousUrl));
+      safeUnlink(path.join(uploadsDir(), path.basename(previousUrl)));
     }
     await User.updateOne({ _id: user._id }, { $set: { profilePhotoUrl: null } });
 
@@ -140,4 +140,3 @@ export function profileRoutes() {
 
   return { get, changePassword, uploadPhoto: [upload.single("file"), uploadPhoto], removePhoto };
 }
-

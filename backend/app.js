@@ -20,7 +20,8 @@ import { adminUsersRoutes } from "./routes/adminUsers.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, ".env") });
+// Local development reads backend/.env. On Vercel, use Project Settings → Environment Variables.
+if (!process.env.VERCEL) dotenv.config({ path: path.join(__dirname, ".env") });
 
 const PORT = parseInt(process.env.PORT || "5000", 10);
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/audit_trail_system";
@@ -58,7 +59,8 @@ app.get("/profile", (req, res) => res.sendFile(path.join(frontendDir, "profile.h
 app.get("/staff-management", (req, res) => res.sendFile(path.join(frontendDir, "staff-management.html")));
 app.get("/bonus-management", (req, res) => res.sendFile(path.join(frontendDir, "bonus-management.html")));
 app.use(express.static(frontendDir));
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+const uploadsDir = process.env.VERCEL ? path.join("/tmp", "uploads") : path.join(process.cwd(), "uploads");
+app.use("/uploads", express.static(uploadsDir));
 
 // API
 app.get("/api/health", (req, res) => res.json({ ok: true }));
@@ -117,6 +119,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "internal_error" });
 });
 
-app.listen(PORT, "127.0.0.1", () => {
-  logger.info(`Server listening on http://127.0.0.1:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, "127.0.0.1", () => {
+    logger.info(`Server listening on http://127.0.0.1:${PORT}`);
+  });
+}
+
+export default app;
