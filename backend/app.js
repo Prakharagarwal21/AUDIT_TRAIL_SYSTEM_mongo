@@ -24,14 +24,16 @@ const __dirname = path.dirname(__filename);
 if (!process.env.VERCEL) dotenv.config({ path: path.join(__dirname, ".env") });
 
 const PORT = parseInt(process.env.PORT || "5000", 10);
+const HAS_MONGO_ENV = Boolean(process.env.MONGO_URI || process.env.MONGODB_URI);
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/audit_trail_system";
 const JWT_SECRET = process.env.JWT_SECRET || "dev-change-me";
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1h";
 const LOG_LEVEL = process.env.LOG_LEVEL || "info";
 
 const logger = createLogger(LOG_LEVEL);
-
-await connectDb(MONGO_URI);
+if (process.env.VERCEL && !HAS_MONGO_ENV) {
+  logger.error("Missing MongoDB env on Vercel. Set MONGO_URI (or MONGODB_URI) in Vercel Project Settings.");
+}
 
 const app = express();
 app.set("trust proxy", false);
@@ -63,6 +65,18 @@ const uploadsDir = process.env.VERCEL ? path.join("/tmp", "uploads") : path.join
 app.use("/uploads", express.static(uploadsDir));
 
 // API
+app.use("/api", async (req, res, next) => {
+  if (process.env.VERCEL && !HAS_MONGO_ENV) {
+    return res.status(500).json({ error: "missing_mongo_uri", message: "Set MONGO_URI in Vercel environment variables." });
+  }
+  try {
+    await connectDb(MONGO_URI);
+    return next();
+  } catch (err) {
+    logger.error("MongoDB connection failed", { err: String(err) });
+    return res.status(500).json({ error: "db_unavailable" });
+  }
+});
 app.get("/api/health", (req, res) => res.json({ ok: true }));
 
 const auth = authRoutes({ jwtSecret: JWT_SECRET, jwtExpiresIn: JWT_EXPIRES_IN });
