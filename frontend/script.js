@@ -575,6 +575,7 @@
           avatar.innerHTML = `<span style="font-weight:900;color:#1d4ed8;">${letter}</span>`;
         }
       }
+
     }
 
     $("uploadPhotoBtn")?.addEventListener("click", async () => {

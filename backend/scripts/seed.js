@@ -22,12 +22,27 @@ async function upsertUser({ username, password, role }) {
   const existing = await User.findOne({ username: { $regex: new RegExp(`^${escapeRegex(desiredUsername)}$`, "i") } });
   const passwordHash = await bcrypt.hash(password, 12);
   if (!existing) {
-    await User.create({ username: desiredUsername, passwordHash, role });
+    await User.create({
+      username: desiredUsername,
+      passwordHash,
+      role,
+      tokenVersion: 0
+    });
     return;
   }
   await User.updateOne(
     { _id: existing._id },
-    { $set: { username: desiredUsername, passwordHash, role, isBlocked: false, blockedReason: null, blockedAt: null } }
+    {
+      $set: {
+        username: desiredUsername,
+        passwordHash,
+        role,
+        isBlocked: false,
+        blockedReason: null,
+        blockedAt: null
+      },
+      $inc: { tokenVersion: 1 }
+    }
   );
 }
 

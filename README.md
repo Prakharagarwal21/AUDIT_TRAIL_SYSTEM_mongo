@@ -6,7 +6,7 @@ An Audit Trail DBMS that records **who did what, when, from where, and with what
 
 - **MongoDB-backed append-only audit log** (`audit_logs`) (application enforces append-only)
 - **Auth**: username/password with **bcrypt** hashing
-- **RBAC**: `admin` can view/export/filter logs and manage security alerts; `user` cannot access the audit logs page/APIs
+- **RBAC**: `admin` can view/export/filter logs and manage security alerts; `staff` cannot access the audit logs page/APIs
 - **Employee CRUD**: create/update/delete employees with audit logging including `old_values`/`new_values`
 - **Admin dashboards**: employee dashboard + audit log viewer + security panel
 - **Suspicious activity**
